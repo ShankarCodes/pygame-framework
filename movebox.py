@@ -25,6 +25,7 @@ dy = 0
 
 speed = 0.8
 
+spaceship = pygame.image.load("player.png").convert_alpha()
 
 def draw_box(scr, x, y, color):
     pygame.draw.rect(scr, color, [x,y,50,50])
@@ -61,9 +62,9 @@ while not done:
     box_y = box_y + dy 
     
     #All drawing code.
-    screen.fill(BLACK)
-    draw_box(screen, box_x, box_y, WHITE)
-    
+    screen.fill(WHITE)
+    #draw_box(screen, box_x, box_y, WHITE)
+    screen.blit(spaceship,(box_x,box_y))
     
     #Updating screen.
     pygame.display.flip()
