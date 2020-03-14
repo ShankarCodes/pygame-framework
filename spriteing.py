@@ -1,5 +1,6 @@
 import pygame
 import random
+from sengine import physics
 pygame.init()
 
 BLACK    = (   0,   0,   0)
@@ -17,24 +18,24 @@ pygame.display.set_caption(TITLE)
 done = False
 clock = pygame.time.Clock()
 
-class Ball(pygame.sprite.Sprite):
+class Ball(physics.GravityAffectedBody):
     def __init__(self,x,y):
         self.image = pygame.image.load("ball.png").convert_alpha()
         self.rect = self.image.get_rect(center=(x,y))
         self.dx = random.choice([-1,1])
         self.dy = random.choice([-1,1])
         
-        super().__init__()
+        super().__init__(self.image,self.rect)
         
-    def update(self):
+    def cupdate(self):
         self.check_bounce()
-        self.rect.x +=self.dx
-        self.rect.y +=self.dy
+        #self.rect.x +=self.dx
+        #self.rect.y +=self.dy
     def check_bounce(self):
         if self.rect.x > 600 or self.rect.x < 0:
-            self.dx *= -1
+            self.rect.x = 600
         if self.rect.y > 400 or self.rect.y < 0:
-            self.dy *= -1
+            self.rect.y = 400
 ball = Ball(200,200)
 ball_list = pygame.sprite.Group()
 ball_list.add(ball)

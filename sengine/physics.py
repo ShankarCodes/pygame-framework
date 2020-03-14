@@ -1,9 +1,19 @@
 import pygame
-from . import image
-class GravityAffectedBody(pygame.sprite.Sprite):
-    def __init__(self, img, initial_x, initial_y):
-        self.img = image.load(img)
-        self.rect = self.img.get_rect(center = (initial_x, initial_y))
-    
+
+class Body(pygame.sprite.Sprite):
+    def __init__(self, img, rect):
+        self.image = img
+        self.rect = rect
+        super().__init__()
+        
+
+
+class GravityAffectedBody(Body):
+    def __init__(self, img, rect):
+        super().__init__(img, rect)
     def update(self):
-        self.rect.y += -1    
+        self.cupdate()
+        self.rect.y += 1    
+    
+    def cupdate(self):
+        pass
