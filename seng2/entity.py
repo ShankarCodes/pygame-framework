@@ -1,4 +1,6 @@
 from . import image
+from . import tile
+
 import pygame
 class Entity(pygame.sprite.Sprite):
     def __init__(self, img, x, y):
@@ -50,11 +52,16 @@ class Player(Entity):
         if self.block_list is not None:
             hits = pygame.sprite.spritecollide(self, self.block_list, False)
             for block in hits:
-                if self.dx > 0:
-                    self.rect.right = block.rect.left
-                if self.dx < 0:
-                    self.rect.left = block.rect.right
- 
+                if isinstance(block, tile.ImpassableBlock):
+                    if self.dx > 0:
+                        self.rect.right = block.rect.left
+                    if self.dx < 0:
+                        self.rect.left = block.rect.right
+                    if self.dy > 0:
+                        self.rect.bottom = block.rect.top
+                    if self.dy < 0:
+                        self.rect.top = block.rect.bottom
+     
 class Enemy(Entity):
     def __init__(self, img, x, y, hp, ap):
         self.hp = hp

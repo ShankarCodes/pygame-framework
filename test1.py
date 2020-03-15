@@ -20,11 +20,14 @@ pl_list.add(player)
 bl_list = pygame.sprite.Group()
 all = pygame.sprite.Group()
 
-blk = tile.Block("blk.png",200,200)
+blk = tile.ImpassableBlock("blk.png",200,200)
+blk1 = tile.GravityAffectedBlock("blk.png",250,200)
 bl_list.add(blk)
+bl_list.add(blk1)
 
 all.add(blk)
 all.add(player)
+all.add(blk1)
 player.block_list = bl_list
 dt = 0
 while not done:
