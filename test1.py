@@ -1,6 +1,5 @@
-import entity
-import image
 import pygame
+from seng import game
 
 pygame.init()
 
@@ -21,7 +20,7 @@ clock = pygame.time.Clock()
 
 
 
-player = entity.Player1("player.png",100, 100, 50, 20)
+player = game.Player("player.png",100, 100, 50, 20)
 player.speed = 0.8
 pl_list = pygame.sprite.Group()
 pl_list.add(player)
@@ -42,7 +41,8 @@ while not done:
                 di = 'L'#player.move(dt, 'L')
             if event.key == pygame.K_RIGHT:
                 di = 'R'#player.move(dt, 'R')
-                print('R')
+                    
+            
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 player.dy = 0

@@ -1,5 +1,3 @@
-import pygame
-import image
 class Entity:
     def __init__(self, x, y):
         self.x = x
@@ -48,12 +46,5 @@ class Enemy(Entity):
         self.ap = ap
         super().__init__(x, y)
         
-class Player1(pygame.sprite.Sprite,Player):
-    def __init__(self,img,x,y,hp,ap):
-        self.image = image.load(img)
-        self.rect = self.image.get_rect(center=(x,y))
-        super().__init__()
-        Player.__init__(self,x,y,hp,ap)
-    def update(self):
-        self.rect.x = self.x
-        self.rect.y = self.y
+
+
