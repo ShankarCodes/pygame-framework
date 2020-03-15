@@ -1,23 +1,13 @@
 import pygame
 from seng import game
+from seng.create import *
 
 pygame.init()
 
-BLACK    = (   0,   0,   0)
-WHITE    = ( 255, 255, 255)
-GREEN    = (   0, 255,   0)
-RED      = ( 255,   0,   0)
-BLUE     = (   0,   0, 255)
-
-TITLE = "Shankar Moves Box"
-
 size = (700,500)
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption(TITLE)
 
 done = False
-clock = pygame.time.Clock()
-
+screen = Screen("Shankar", 700, 500, 120)
 
 
 player = game.Player("player.png",100, 100, 50, 20)
@@ -50,14 +40,13 @@ while not done:
                 player.dx = 0
     player.move(dt, di)
     #All drawing code.
-    screen.fill(WHITE)
+    screen.screen.fill(WHITE)
     #screen.blit(bg,(0,0))
     #draw_box(screen, box_x, box_y, WHITE)
     #screen.blit(player.image,player.x,player.y)
     pl_list.update()
-    pl_list.draw(screen)
+    pl_list.draw(screen.screen)
     #Updating screen.
     pygame.display.flip()
-    clock.tick(60)
-    dt = pygame.time.get_ticks() - lt
+    dt = screen.tick()
     
