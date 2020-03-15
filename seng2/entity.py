@@ -1,7 +1,9 @@
-class Entity:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+from . import image
+import pygame
+class Entity(pygame.sprite.Sprite):
+    def __init__(self, img, x, y):
+        self.image = image.load(img)
+        self.rect = self.image.get_rect(center=(x,y))
         self.dx = 0
         self.dy = 0
         if not hasattr(self,'hp'):
@@ -10,7 +12,8 @@ class Entity:
             self.ap = 0
         self.speed = 2
         self.isalive = True
-    
+        super().__init__()
+        
     def damage(self,ap):
         self.hp = self.hp - ap
         if self.hp < 0:
@@ -30,25 +33,33 @@ class Entity:
             self.dy = -1
         if direction == 'D':
             self.dy = 1
-        self.y += self.speed * dt * self.dy
-        self.x += self.speed * dt * self.dx
+        self.rect.y += self.speed * dt * self.dy
+        self.rect.x += self.speed * dt * self.dx
     
     def set_speed(self, speed):
         self.speed = speed    
 
 class Player(Entity):
-    def __init__(self, x, y, hp, ap):
+    def __init__(self, img, x, y, hp, ap):
         self.hp = hp
         self.ap = ap
-        
-        super().__init__(x, y)
-   
-
+        self.block_list = None
+        super().__init__(img, x, y)
+    
+    def update(self):
+        if self.block_list is not None:
+            hits = pygame.sprite.spritecollide(self, self.block_list, False)
+            for block in hits:
+                if self.dx > 0:
+                    self.rect.right = block.rect.left
+                if self.dx < 0:
+                    self.rect.left = block.rect.right
+ 
 class Enemy(Entity):
-    def __init__(self, x, y, hp, ap):
+    def __init__(self, img, x, y, hp, ap):
         self.hp = hp
         self.ap = ap
-        super().__init__(x, y)
+        super().__init__(img, x, y)
         
 
 

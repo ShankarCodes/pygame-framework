@@ -1,23 +1,35 @@
 import pygame
-from seng import game
-from seng.create import *
+from seng2 import entity
+from seng2 import tile
+from seng2.create import *
 
 pygame.init()
 
 size = (700,500)
 
 done = False
-screen = Screen("Shankar", 700, 500, 120)
+screen = Screen("Shankar", 700, 500, 30)
 
 
-player = game.Player("player.png",100, 100, 50, 20)
+player = entity.Player("player.png",100, 100, 50, 20)
 player.speed = 0.8
+
 pl_list = pygame.sprite.Group()
 pl_list.add(player)
+
+bl_list = pygame.sprite.Group()
+all = pygame.sprite.Group()
+
+blk = tile.Block("blk.png",200,200)
+bl_list.add(blk)
+
+all.add(blk)
+all.add(player)
+player.block_list = bl_list
 dt = 0
 while not done:
     di = ""
-    lt = pygame.time.get_ticks()
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
@@ -32,7 +44,6 @@ while not done:
             if event.key == pygame.K_RIGHT:
                 di = 'R'#player.move(dt, 'R')
                     
-            
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 player.dy = 0
@@ -43,9 +54,11 @@ while not done:
     screen.screen.fill(WHITE)
     #screen.blit(bg,(0,0))
     #draw_box(screen, box_x, box_y, WHITE)
+    hit = pygame.sprite.spritecollide
     #screen.blit(player.image,player.x,player.y)
     pl_list.update()
-    pl_list.draw(screen.screen)
+    bl_list.update()
+    all.draw(screen.screen)
     #Updating screen.
     pygame.display.flip()
     dt = screen.tick()
